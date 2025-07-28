@@ -45,30 +45,40 @@ void display(Node *head)
     }
 }
 
-
-Node* sort_1(Node *head){
-    if(head==nullptr || head->next==nullptr) return head;
-    Node*temp = head;
+// method 1
+Node *sort_1(Node *head)
+{
+    if (head == nullptr || head->next == nullptr)
+        return head;
+    Node *temp = head;
     int cnt0 = 0, cnt1 = 0, cnt2 = 0;
-    while(temp){
-        if(temp->data==0) cnt0++;
-        else if(temp->data==1) cnt1++;
-        else cnt2++;
+    while (temp)
+    {
+        if (temp->data == 0)
+            cnt0++;
+        else if (temp->data == 1)
+            cnt1++;
+        else
+            cnt2++;
         temp = temp->next;
     }
 
     temp = head;
-    while(temp){
-        if(cnt0){
-            temp->data=0;
+    while (temp)
+    {
+        if (cnt0)
+        {
+            temp->data = 0;
             cnt0--;
         }
-        else if(cnt1){
-            temp->data=1;
+        else if (cnt1)
+        {
+            temp->data = 1;
             cnt1--;
         }
-        else{
-            temp->data=2;
+        else
+        {
+            temp->data = 2;
             cnt2--;
         }
         temp = temp->next;
@@ -77,6 +87,53 @@ Node* sort_1(Node *head){
     return head;
 }
 
+Node *sort_2(Node *head)
+{
+    if (head == nullptr || head->next == nullptr)
+        return head;
+
+    Node *temp = head;
+    Node *zeroList = new Node(-1);
+    Node *oneList = new Node(-1);
+    Node *twoList = new Node(-1);
+
+    Node *zero = zeroList;
+    Node *one = oneList;
+    Node *two = twoList;
+
+    while (temp != nullptr)
+    {
+        if (temp->data == 0)
+        {
+            zero->next = temp;
+            zero = zero->next;
+        }
+        else if (temp->data == 1)
+        {
+            one->next = temp;
+            one = one->next;
+        }
+        else
+        {
+            two->next = temp;
+            two = two->next;
+        }
+
+        temp = temp->next;
+    }
+
+    zero->next = (oneList->next) ? oneList->next : twoList->next;
+    one->next = twoList->next;
+    two->next = nullptr;
+
+    Node *sortedHead = zeroList->next;
+
+    delete zeroList;
+    delete oneList;
+    delete twoList;
+
+    return sortedHead;
+}
 
 int main()
 {
@@ -89,9 +146,13 @@ int main()
     display(head1);
     cout << endl;
 
-    Node* result1 = sort_1(head1);
-    cout<<"Sort LL of 0's, 1's and 2's"<<endl;
+    Node *result1 = sort_1(head1);
+    cout << "Sort LL of 0's, 1's and 2's" << endl;
     display(result1);
+
+    Node *result2 = sort_2(head2);
+    cout << "\nSort LL of 0's, 1's and 2's" << endl;
+    display(result2);
 
     return 0;
 }
