@@ -87,6 +87,7 @@ Node *sort_1(Node *head)
     return head;
 }
 
+// method 2
 Node *sort_2(Node *head)
 {
     if (head == nullptr || head->next == nullptr)
