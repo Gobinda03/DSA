@@ -34,19 +34,30 @@ Node*ConvertArrToLL(vector<int>arr){
 
 
 //Reverse the Linked List
-
-Node* reverseTheList(Node*head){
+Node* reverseTheList1(Node*head){
     if(head==nullptr||head->next==nullptr)return head;
 
-    Node* newhead=reverseTheList(head->next);
+    Node* newhead=reverseTheList1(head->next);
     Node*front=head->next;
     front->next=head;
     head->next=nullptr;
     return newhead;
 }
 
+Node* reverseTheList2(Node*head){
+    Node *temp = head;
+    Node *prev = nullptr;
+    while(temp!=nullptr){
+        Node *front = temp->next;
+        temp->next = prev;
+        prev = temp;
+        temp = front;
+    }
+    return prev;
+}
+
 //Printing the all node of the list
-void print(Node*head){
+void display(Node*head){
     Node*temp=head;
     while(temp!=nullptr){
         cout<<temp->data<<" ";
@@ -56,10 +67,21 @@ void print(Node*head){
 }
 int main()
 {
-    vector<int>arr={5,10,15,20};
-    Node*head=ConvertArrToLL(arr);
-    head = reverseTheList(head);
-    print(head);
+    vector<int> arr = {5, 10, 15, 20, 25, 30};
+
+    Node* head1 = ConvertArrToLL(arr);
+    Node* head2 = ConvertArrToLL(arr);
+
+    cout << "Original:\n";
+    display(head1); cout << endl;
+
+    cout << "After reversing the LL:\n";
+    Node* result1 = reverseTheList1(head1);
+    display(result1); cout << endl;
+
+    cout << "After reversing the LL :\n";
+    Node* result2 = reverseTheList2(head2);
+    display(result2); cout << endl;
     
     return 0;
 }
