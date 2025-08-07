@@ -79,7 +79,7 @@ void display(Node*head){
 
 
 // Flattening the LL 
-/*      TC = O(N*M)*2 + O(NlogN)
+/*      TC = O(N*M)*2 + O(N*MlogN*M)
         SC = O(N*M)*2             */
 Node *flattenLL(Node*head){
     vector<int>arr;
@@ -100,6 +100,37 @@ Node *flattenLL(Node*head){
 
 
 
+Node *margeTwoList(Node *list1, Node *list2){
+    Node *dummyNode = new Node(-1);
+    Node *res = dummyNode;
+    while(list1 != nullptr && list2 != nullptr){
+        if(list1->data < list2->data){
+            res->child = list1;
+            res = list1;
+            list1 = list1->child;
+        }
+        else{
+            res->child = list2;
+            res = list2;
+            list2 = list2->child;
+        }
+        res->next = nullptr;
+    }
+
+    if(list1) res->child = list1;
+    else res->child = list2;
+
+    if(dummyNode->child) dummyNode->child->next = nullptr;
+    return dummyNode->child;
+}
+Node *flattenLL2(Node*head){
+    if(head == nullptr || head->next == nullptr) return head;
+
+    Node * margeHead = flattenLL2(head->next);
+    head = margeTwoList(head, margeHead);
+    return head;
+}
+
 int main() {
     Node *head = new Node(2);
 
@@ -118,9 +149,15 @@ int main() {
     cout << "Original linked list:" << endl;
     printOriginalLinkedList(head, 0);
 
+    // cout << "After flattening the LL:\n";
+    // Node* result1 = flattenLL(head);
+    // display(result1);
+    // cout << endl;
+
+
     cout << "After flattening the LL:\n";
-    Node* result1 = flattenLL(head);
-    display(result1);
+    Node* result2 = flattenLL2(head);
+    display(result2);
     cout << endl;
 
     return 0;
