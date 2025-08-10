@@ -51,6 +51,7 @@ void display(Node*head){
 }
 
 // Copy list with the random pointer
+// TC =O(2N)    SC = O(2N)
 Node *cloneLL(Node *head){
     if(head == nullptr) return head;
     Node *temp = head;
@@ -72,6 +73,44 @@ Node *cloneLL(Node *head){
 }
 
 
+// Copy list with the random pointer 2nd Method
+// TC =O(3N)    SC = O(N)
+Node *cloneLL2(Node *head){
+    if(head == nullptr) return head;
+    Node *temp = head;
+    
+    while(temp!=nullptr){
+        Node *copyNode = new Node(temp->data);
+        copyNode->next = temp->next;
+        temp->next = copyNode;
+        temp = temp->next->next;
+    }
+    temp = head;
+    while(temp!=nullptr){
+        Node *copyNode = temp->next;
+        if(temp->random){
+            copyNode->random = temp->random->next;
+        }
+        else{
+            copyNode->random = nullptr;
+        }
+        temp = temp->next->next;
+    }
+
+    temp = head;
+    Node *dummyNode = new Node(-1);
+    Node *res = dummyNode;
+    while(temp!=nullptr){
+        res->next = temp->next;
+        temp->next = temp->next->next;
+        res = res->next;
+        temp= temp->next;
+    }
+
+    return dummyNode->next;
+}
+
+
 int main() {
     Node* head = new Node(7);
     head->next = new Node(14);
@@ -89,7 +128,7 @@ int main() {
     display(head); cout << endl;
 
     cout << "Copy list with  random pointer:\n";
-    Node *result = cloneLL(head);
+    Node *result = cloneLL2(head);
     display(result);
 
     return 0;
