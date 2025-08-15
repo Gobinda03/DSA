@@ -45,6 +45,24 @@ int lastOccur(vector<int>&arr, int n, int target){
 }
 
 
+pair<int, int> firstAndLast(vector<int>&arr, int n, int k){
+    int first = firstOccur(arr,n,k);
+    if(first == -1) return{-1, -1};
+    int last = lastOccur(arr, n, k);
+    return {first, last};
+}
+
+int firstAndLastCount(vector<int>&arr, int n, int k){
+    int first = firstOccur(arr,n,k);
+    if(first == -1) return -1;
+    int last = lastOccur(arr, n, k);
+    return {last - first +1};
+}
+
+
+
+
+
 // TC = O(2log2  N)
 
 
@@ -63,6 +81,7 @@ int main()
 
     cout<<target<<" occur for first time at index "<<firstOccur(arr, n, target)<<endl;
     cout<<target<<" occur for last time at index "<<lastOccur(arr, n, target)<<endl;
+    cout<<"Difference between first and last occurrence is: "<<firstAndLastCount(arr,n,target)<<endl;
 
 
     return 0;
