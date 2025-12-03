@@ -57,5 +57,5 @@ int main()
 
 
 
-// for linear search operation TC is Big O(NlogN) + Big O((arr(Max) - arr(min)) * N)
-// For BS TC is Big O(NlogN) + Big O((log(arr(Max) - arr(min))) * N)
+// for linear search operation TC is Big O(sum - max + 1)*N
+// For BS TC is Big O((log(sum - max+1)) * N)
