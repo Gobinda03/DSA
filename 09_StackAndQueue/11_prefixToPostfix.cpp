@@ -2,7 +2,7 @@
 using namespace std;
 
 
-// Prefix To Postfix
+// Postfix To Prefix
 // Tc = O(N), SC = O(N)
 string prefixToInfix(string s){
     int i = 0;
