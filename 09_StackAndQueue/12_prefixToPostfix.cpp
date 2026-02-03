@@ -23,7 +23,7 @@ string prefixToPostfix(string s){
             string eq =  op1 + op2 + s[i];
             st.push(eq);
         }
-        i++;
+        i--;
     }
 
     return st.top();
@@ -31,7 +31,7 @@ string prefixToPostfix(string s){
 
 int main()
 {
-    string s = "AB-DE+F*/";
+    string s = "/-AB*+DEF";
     cout<<s<<endl;
     cout<<prefixToPostfix(s);
     return 0;
